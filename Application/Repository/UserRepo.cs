@@ -5,6 +5,7 @@ using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.Xml;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -31,6 +32,16 @@ namespace Application.Repository
 
             var result = await _context.Users.UpdateOneAsync(filter, update);
             return result.MatchedCount;
+        }
+
+        public async Task<User> GetUserByIdAsync(string ReferenceId)
+        {
+            var filter = Builders<User>.Filter.Eq("ReferenceId", ReferenceId);
+            return await _context.Users.Find(filter).FirstOrDefaultAsync();
+        }
+        public async Task<List<User>> GetAllUsersAsync()
+        {
+            return await _context.Users.Find(_ => true).ToListAsync();
         }
 
         public async Task<long> UpdateUser(User user)

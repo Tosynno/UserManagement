@@ -4,15 +4,15 @@
     Given I have a new user with Id "1", Username "testuser", Email "test@example.com", Password "ComplexPassword123!", and ConfirmPassword "ComplexPassword123!"
     When I send a request to create the user
     Then the response should be created
-    And the user should be retrievable by Id "1"
+    And the user should be retrievable by ReferenceId "1"
 
   Scenario: Update an existing user
-    Given I have an existing user with Id "1", Username "testuser", Email "test@example.com", Password "ComplexPassword123!", and ConfirmPassword "ComplexPassword123!"
-    When I send a request to update the user with Username "updateduser" and Email "updated@example.com"
+    Given I have an existing user with ReferenceId "1"
+    When I send a request to update the user with ReferenceId "1", Username "updateduser", Email "updated@example.com", Password "UpdatedPassword123!", and ConfirmPassword "UpdatedPassword123!"
     Then the response should be no content
 
   Scenario: Deactivate a user
-    Given I have an existing user with Id "1"
+    Given I have an existing user with ReferenceId "1"
     When I send a request to deactivate the user
     Then the response should be no content
 

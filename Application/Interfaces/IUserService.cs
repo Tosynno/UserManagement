@@ -1,4 +1,5 @@
-﻿using Application.Models;
+﻿using Application.Dtos;
+using Application.Models;
 using Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -13,5 +14,7 @@ namespace Application.Interfaces
         Task<string> CreateUser(UserRequest user);
         Task<string> UpdateUser(UpdateUserRequest user);
         Task<string> DeactivateUser(string id);
+        Task<UserDto> GetUserByIdAsync(string ReferenceId);
+        Task<List<UserDto>> GetAllUsersAsync();
     }
 }

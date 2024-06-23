@@ -17,7 +17,7 @@ namespace Presentation.Controllers
             _userService = userService;
         }
 
-        [HttpPost("CreateUser")]
+        [HttpPost("account/User")]
         public async Task<IActionResult> CreateUser([FromBody] UserRequest user)
         {
             var result = await _userService.CreateUser(user);
@@ -28,7 +28,21 @@ namespace Presentation.Controllers
             return BadRequest(result);
         }
 
-        [HttpPut("UpdateUser")]
+        [HttpGet("account/get-User")]
+        public async Task<IActionResult> getUser()
+        {
+            var result = await _userService.GetAllUsersAsync();
+            return Ok(result);
+        }
+
+        [HttpGet("account/get-User/{ReferenceId}")]
+        public async Task<IActionResult> getUser(string ReferenceId)
+        {
+            var result = await _userService.GetUserByIdAsync(ReferenceId);
+            return Ok(result);
+        }
+
+        [HttpPut("account/user")]
         public async Task<IActionResult> UpdateUser([FromBody] UpdateUserRequest updatedUser)
         {
             var result = await _userService.UpdateUser(updatedUser);
@@ -40,7 +54,7 @@ namespace Presentation.Controllers
             
         }
 
-        [HttpGet("DeactivateUser/{ReferenceId}")]
+        [HttpGet("account/{ReferenceId}/deactivate-User")]
         public async Task<IActionResult> DeactivateUser(string ReferenceId)
         {
             var result = await _userService.DeactivateUser(ReferenceId);

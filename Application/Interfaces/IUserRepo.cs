@@ -12,5 +12,7 @@ namespace Application.Interfaces
         Task<User> CreateUser(User user);
         Task<long> UpdateUser(User user);
         Task<long> DeactivateUser(string id);
+        Task<User> GetUserByIdAsync(string ReferenceId);
+        Task<List<User>> GetAllUsersAsync();
     }
 }

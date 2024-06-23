@@ -1,4 +1,5 @@
 
+using Application.Utilities;
 using Presentation.Extensions;
 
 namespace Presentation
@@ -26,6 +27,16 @@ namespace Presentation
             }
             app.UseExceptionHandleMiddleware();
             app.UseHttpsRedirection();
+
+            app.UseCors(x =>
+            {
+                x.WithOrigins(builder.Configuration["AllowedHosts"]
+                  .Split(",", StringSplitOptions.RemoveEmptyEntries)
+                  .Select(o => o.RemovePostFix("/"))
+                  .ToArray())
+             .AllowAnyMethod()
+             .AllowAnyHeader();
+            });
 
             app.UseAuthorization();
 

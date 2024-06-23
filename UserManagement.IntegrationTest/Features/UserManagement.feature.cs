@@ -109,8 +109,8 @@ namespace UserManagement.IntegrationTest.Features
             {
                 this.ScenarioStart();
 #line 4
-    testRunner.Given("I have a new user with Id \"1\", Username \"testuser\", Email \"test@example.com\", and" +
-                        " IsActive \"true\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+    testRunner.Given("I have a new user with Id \"1\", Username \"testuser\", Email \"test@example.com\", Pas" +
+                        "sword \"ComplexPassword123!\", and ConfirmPassword \"ComplexPassword123!\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 5
     testRunner.When("I send a request to create the user", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
@@ -119,7 +119,7 @@ namespace UserManagement.IntegrationTest.Features
     testRunner.Then("the response should be created", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
 #line 7
-    testRunner.And("the user should be retrievable by Id \"1\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+    testRunner.And("the user should be retrievable by ReferenceId \"1\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             }
             this.ScenarioCleanup();
@@ -154,12 +154,12 @@ namespace UserManagement.IntegrationTest.Features
             {
                 this.ScenarioStart();
 #line 10
-    testRunner.Given("I have an existing user with Id \"1\", Username \"testuser\", Email \"test@example.com" +
-                        "\", and IsActive \"true\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+    testRunner.Given("I have an existing user with ReferenceId \"1\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 11
-    testRunner.When("I send a request to update the user with Username \"updateduser\" and Email \"update" +
-                        "d@example.com\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+    testRunner.When("I send a request to update the user with ReferenceId \"1\", Username \"updateduser\"," +
+                        " Email \"updated@example.com\", Password \"UpdatedPassword123!\", and ConfirmPasswor" +
+                        "d \"UpdatedPassword123!\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 12
     testRunner.Then("the response should be no content", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
@@ -197,7 +197,7 @@ namespace UserManagement.IntegrationTest.Features
             {
                 this.ScenarioStart();
 #line 15
-    testRunner.Given("I have an existing user with Id \"1\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+    testRunner.Given("I have an existing user with ReferenceId \"1\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 16
     testRunner.When("I send a request to deactivate the user", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
@@ -240,10 +240,12 @@ namespace UserManagement.IntegrationTest.Features
                 TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
                             "Name",
                             "Email",
-                            "Password"});
+                            "Password",
+                            "ConfirmPassword"});
                 table1.AddRow(new string[] {
                             "user1",
                             "email1@email.de",
+                            "ComplexPassword123!",
                             "ComplexPassword123!"});
 #line 20
     testRunner.Given("I have a user in database", ((string)(null)), table1, "Given ");
@@ -251,10 +253,12 @@ namespace UserManagement.IntegrationTest.Features
                 TechTalk.SpecFlow.Table table2 = new TechTalk.SpecFlow.Table(new string[] {
                             "Name",
                             "Email",
-                            "Password"});
+                            "Password",
+                            "ConfirmPassword"});
                 table2.AddRow(new string[] {
                             "user1",
                             "email1@email.de",
+                            "ComplexPassword123!",
                             "ComplexPassword123!"});
 #line 23
     testRunner.And("I have a user data", ((string)(null)), table2, "And ");
@@ -275,10 +279,11 @@ namespace UserManagement.IntegrationTest.Features
         [Xunit.SkippableTheoryAttribute(DisplayName="Verify that validation error is returned when required fields are not provided")]
         [Xunit.TraitAttribute("FeatureTitle", "User Management API")]
         [Xunit.TraitAttribute("Description", "Verify that validation error is returned when required fields are not provided")]
-        [Xunit.InlineDataAttribute("1", "", "email1@email.de", "ComplexPassword123!", "Name field is required", new string[0])]
-        [Xunit.InlineDataAttribute("2", "user1", "", "ComplexPassword123!", "Email field is required", new string[0])]
-        [Xunit.InlineDataAttribute("3", "user1", "email1@email.de", "", "Password field is required", new string[0])]
-        public virtual void VerifyThatValidationErrorIsReturnedWhenRequiredFieldsAreNotProvided(string row, string name, string email, string password, string error, string[] exampleTags)
+        [Xunit.InlineDataAttribute("1", "", "email1@email.de", "ComplexPassword123!", "ComplexPassword123!", "Name field is required", new string[0])]
+        [Xunit.InlineDataAttribute("2", "user1", "", "ComplexPassword123!", "ComplexPassword123!", "Email field is required", new string[0])]
+        [Xunit.InlineDataAttribute("3", "user1", "email1@email.de", "", "ComplexPassword123!", "Password field is required", new string[0])]
+        [Xunit.InlineDataAttribute("4", "user1", "email1@email.de", "ComplexPassword123!", "", "Confirm Password is required", new string[0])]
+        public virtual void VerifyThatValidationErrorIsReturnedWhenRequiredFieldsAreNotProvided(string row, string name, string email, string password, string confirmPassword, string error, string[] exampleTags)
         {
             string[] tagsOfScenario = exampleTags;
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
@@ -286,6 +291,7 @@ namespace UserManagement.IntegrationTest.Features
             argumentsOfScenario.Add("Name", name);
             argumentsOfScenario.Add("Email", email);
             argumentsOfScenario.Add("Password", password);
+            argumentsOfScenario.Add("ConfirmPassword", confirmPassword);
             argumentsOfScenario.Add("Error", error);
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Verify that validation error is returned when required fields are not provided", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
 #line 30
@@ -311,11 +317,13 @@ namespace UserManagement.IntegrationTest.Features
                 TechTalk.SpecFlow.Table table3 = new TechTalk.SpecFlow.Table(new string[] {
                             "Name",
                             "Email",
-                            "Password"});
+                            "Password",
+                            "ConfirmPassword"});
                 table3.AddRow(new string[] {
                             string.Format("{0}", name),
                             string.Format("{0}", email),
-                            string.Format("{0}", password)});
+                            string.Format("{0}", password),
+                            string.Format("{0}", confirmPassword)});
 #line 31
     testRunner.Given("I have a user in database", ((string)(null)), table3, "Given ");
 #line hidden
@@ -337,28 +345,30 @@ namespace UserManagement.IntegrationTest.Features
         [Xunit.TraitAttribute("FeatureTitle", "User Management API")]
         [Xunit.TraitAttribute("Description", "Verify that validation error is returned when password does not meet complexity r" +
             "equirements or password size")]
-        [Xunit.InlineDataAttribute("1", "abc", "Password length should be between 8 and 16.", new string[0])]
-        [Xunit.InlineDataAttribute("2", "123", "Password length should be between 8 and 16.", new string[0])]
-        [Xunit.InlineDataAttribute("3", "abc123", "Password length should be between 8 and 16.", new string[0])]
-        [Xunit.InlineDataAttribute("4", "123456781235678abc", "Password length should be between 8 and 16.", new string[0])]
-        [Xunit.InlineDataAttribute("5", "1111111", "Password does not meet complexity level, it should contain 1 upper case letter, 1" +
+        [Xunit.InlineDataAttribute("1", "abc", "abc", "Password length should be between 8 and 16.", new string[0])]
+        [Xunit.InlineDataAttribute("2", "123", "123", "Password length should be between 8 and 16.", new string[0])]
+        [Xunit.InlineDataAttribute("3", "abc123", "abc123", "Password length should be between 8 and 16.", new string[0])]
+        [Xunit.InlineDataAttribute("4", "123456781235678abc", "123456781235678abc", "Password length should be between 8 and 16.", new string[0])]
+        [Xunit.InlineDataAttribute("5", "1111111", "1111111", "Password does not meet complexity level, it should contain 1 upper case letter, 1" +
             " number and 1 special character.", new string[0])]
-        [Xunit.InlineDataAttribute("6", "1111111aA", "Password does not meet complexity level, it should contain 1 upper case letter, 1" +
+        [Xunit.InlineDataAttribute("6", "1111111aA", "1111111aA", "Password does not meet complexity level, it should contain 1 upper case letter, 1" +
             " number and 1 special character.", new string[0])]
-        [Xunit.InlineDataAttribute("7", "1111111a!", "Password does not meet complexity level, it should contain 1 upper case letter, 1" +
+        [Xunit.InlineDataAttribute("7", "1111111a!", "1111111a!", "Password does not meet complexity level, it should contain 1 upper case letter, 1" +
             " number and 1 special character.", new string[0])]
-        [Xunit.InlineDataAttribute("8", "aaaaaaa!A", "Password does not meet complexity level, it should contain 1 upper case letter, 1" +
+        [Xunit.InlineDataAttribute("8", "aaaaaaa!A", "aaaaaaa!A", "Password does not meet complexity level, it should contain 1 upper case letter, 1" +
             " number and 1 special character.", new string[0])]
-        public virtual void VerifyThatValidationErrorIsReturnedWhenPasswordDoesNotMeetComplexityRequirementsOrPasswordSize(string row, string password, string error, string[] exampleTags)
+        [Xunit.InlineDataAttribute("9", "ComplexPassword123!", "ComplexPasswrd!", "Password and Confirm Password do not match.", new string[0])]
+        public virtual void VerifyThatValidationErrorIsReturnedWhenPasswordDoesNotMeetComplexityRequirementsOrPasswordSize(string row, string password, string confirmPassword, string error, string[] exampleTags)
         {
             string[] tagsOfScenario = exampleTags;
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             argumentsOfScenario.Add("Row", row);
             argumentsOfScenario.Add("Password", password);
+            argumentsOfScenario.Add("ConfirmPassword", confirmPassword);
             argumentsOfScenario.Add("Error", error);
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Verify that validation error is returned when password does not meet complexity r" +
                     "equirements or password size", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
-#line 43
+#line 44
   this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -381,21 +391,23 @@ namespace UserManagement.IntegrationTest.Features
                 TechTalk.SpecFlow.Table table4 = new TechTalk.SpecFlow.Table(new string[] {
                             "Name",
                             "Email",
-                            "Password"});
+                            "Password",
+                            "ConfirmPassword"});
                 table4.AddRow(new string[] {
                             "user1",
                             "email1@email.de",
-                            string.Format("{0}", password)});
-#line 44
+                            string.Format("{0}", password),
+                            string.Format("{0}", confirmPassword)});
+#line 45
     testRunner.Given("I have a user in database", ((string)(null)), table4, "Given ");
 #line hidden
-#line 47
+#line 48
     testRunner.When("I call Create user API", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 48
+#line 49
     testRunner.Then("I should receive an error code 400", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
-#line 49
+#line 50
     testRunner.And(string.Format("Response message should contain \"{0}\"", error), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             }

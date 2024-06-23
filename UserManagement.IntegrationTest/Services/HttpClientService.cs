@@ -27,6 +27,13 @@ namespace UserManagement.IntegrationTest.Services
             }
         }
 
+        public async Task<HttpResponseMessage> GetAsync(string uri, Dictionary<string, string> headers = null)
+        {
+            AddHeaders(headers);
+
+            var response = await _httpClient.GetAsync(uri);
+            return response;
+        }
         public async Task<T> GetAsync<T>(string uri, Dictionary<string, string> headers = null)
         {
             AddHeaders(headers);
@@ -53,6 +60,14 @@ namespace UserManagement.IntegrationTest.Services
             return response;
         }
 
+
+        public async Task<HttpResponseMessage> PutAsync(string uri, object data, Dictionary<string, string> headers = null)
+        {
+            AddHeaders(headers);
+
+            var response = await _httpClient.PutAsJsonAsync(uri, data);
+            return response;
+        }
         public async Task<T> PutAsync<T>(string uri, object data, Dictionary<string, string> headers = null)
         {
             AddHeaders(headers);

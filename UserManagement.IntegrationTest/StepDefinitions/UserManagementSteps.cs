@@ -1,4 +1,7 @@
-﻿using Application.Models;
+﻿using Application.Dtos;
+using Application.Interfaces;
+using Application.Models;
+using Castle.Core.Resource;
 using Domain.Entities;
 using Infrastructure.Data;
 using Microsoft.AspNetCore.Mvc;
@@ -11,28 +14,35 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using UserManagement.IntegrationTest.Services;
 
 namespace UserManagement.IntegrationTest.StepDefinitions
 {
     [Binding]
     public class UserManagementSteps
     {
-        private readonly HttpClient _client;
+        private readonly HttpClientService _httpClient;
+        private readonly IUserService _userService;
         private HttpResponseMessage _response;
-        private string _userId;
+        private string _responseContent;
+        private const string BaseUrl ="";
 
-        public UserManagementSteps()
+        private string ReferenceId;
+        private UserDto user;
+
+        public UserManagementSteps(HttpClientService client, IUserService userService)
         {
-            // Assume we have a TestServer or HttpClientFactory setup to get HttpClient instance
-            _client = new HttpClient { BaseAddress = new Uri("http://localhost:5000/api") };
+            _httpClient = client;
+            _userService = userService;
         }
 
         [Given(@"I have a new user with Id ""(.*)"", Username ""(.*)"", Email ""(.*)"", Password ""(.*)"", and ConfirmPassword ""(.*)""")]
         public void GivenIHaveANewUser(string id, string username, string email, string password, string confirmPassword)
         {
-            _userId = id;
+            ReferenceId = id;
             var user = new
             {
                 Id = id,
@@ -48,36 +58,41 @@ namespace UserManagement.IntegrationTest.StepDefinitions
         public async Task WhenISendARequestToCreateTheUser()
         {
             var user = ScenarioContext.Current["User"];
-            var content = new StringContent(JsonConvert.SerializeObject(user), Encoding.UTF8, "application/json");
-            _response = await _client.PostAsync("/users", content);
+            var Createcustomer = _httpClient.PostAsync($"{BaseUrl}/account/User", user).Result;
+            _response = Createcustomer;
+            _responseContent = Createcustomer.Content.ReadAsStringAsync().Result;
+            Assert.True(string.IsNullOrEmpty(_responseContent));
         }
 
         [Then(@"the response should be created")]
         public void ThenTheResponseShouldBeCreated()
         {
-            _response.StatusCode.Should().Be(HttpStatusCode.Created);
+            _response.StatusCode.Should().Be(HttpStatusCode.OK);
         }
 
-        [Then(@"the user should be retrievable by Id ""(.*)""")]
-        public async Task ThenTheUserShouldBeRetrievableById(string id)
+        [Then(@"the user should be retrievable by ReferenceId ""(.*)""")]
+        public async Task ThenTheUserShouldBeRetrievableById(string ReferenceId)
         {
-            var response = await _client.GetAsync($"/users/{id}");
+            var response = await _httpClient.GetAsync($"{BaseUrl}/account/get-User/{ReferenceId}");
             response.StatusCode.Should().Be(HttpStatusCode.OK);
         }
 
-        [Given(@"I have an existing user with Id ""(.*)""")]
-        public void GivenIHaveAnExistingUserWithId(string id)
+        [Given(@"I have an existing user with ReferenceId ""(.*)""")]
+        public async void GivenIHaveAnExistingUserWithId(string ReferenceId)
         {
-            // Assuming the user already exists in the database for testing
-            _userId = id;
+            user = new UserDto();
+            var result = await _userService.GetUserByIdAsync(ReferenceId);
+            ReferenceId = result.ReferenceId;
+            user = result;
         }
 
-        [When(@"I send a request to update the user with Username ""(.*)"" and Email ""(.*)""")]
-        public async Task WhenISendARequestToUpdateTheUser(string username, string email)
+        [When(@"I send a request to update the user with ReferenceId ""(.*)"", Username ""(.*)"", Email ""(.*)"", Password ""(.*)"", and ConfirmPassword ""(.*)""")]
+        public async Task WhenISendARequestToUpdateTheUser(string referenceId, string username, string email, string password, string confirmPassword)
         {
-            var user = new { Username = username, Email = email };
+            var user = new UpdateUserRequest { ReferenceId = referenceId, Username = username, Email = email, Password=password, ConfirmPassword =confirmPassword };
             var content = new StringContent(JsonConvert.SerializeObject(user), Encoding.UTF8, "application/json");
-            _response = await _client.PutAsync($"/users/{_userId}", content);
+            _response = await _httpClient.PutAsync($"{BaseUrl}/account/user", content);
+            Assert.Equal(HttpStatusCode.OK, _response.StatusCode);
         }
 
         [Then(@"the response should be no content")]
@@ -89,21 +104,16 @@ namespace UserManagement.IntegrationTest.StepDefinitions
         [When(@"I send a request to deactivate the user")]
         public async Task WhenISendARequestToDeactivateTheUser()
         {
-            _response = await _client.DeleteAsync($"/users/{_userId}");
+            _response = await _httpClient.GetAsync($"{BaseUrl}account/{ReferenceId}/deactivate-User");
         }
 
-        [Given(@"I have a user in database")]
-        public void GivenIHaveAUserInDatabase(Table table)
-        {
-            // Mocking or setup database state
-        }
 
         [When(@"I call Create user API")]
         public async Task WhenICallCreateUserAPI()
         {
             var user = ScenarioContext.Current["User"];
             var content = new StringContent(JsonConvert.SerializeObject(user), Encoding.UTF8, "application/json");
-            _response = await _client.PostAsync("/users", content);
+            _response = await _httpClient.PostAsync($"{BaseUrl}/account/User", content);
         }
 
         [Then(@"I will receive an error code (.*)")]

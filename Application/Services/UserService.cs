@@ -1,9 +1,11 @@
-﻿using Application.Interfaces;
+﻿using Application.Dtos;
+using Application.Interfaces;
 using Application.Models;
 using Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.Xml;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -50,6 +52,25 @@ namespace Application.Services
             {
                 return "Unable to deactivated user !!!";
             }
+        }
+
+        public async Task<List<UserDto>> GetAllUsersAsync()
+        {
+            var Allresponse = new List<UserDto>();
+            var result = await _userService.GetAllUsersAsync();
+            foreach (var item in result)
+            {
+                var response = new UserDto(item);
+                Allresponse.Add(response);
+            }
+            return Allresponse;
+        }
+
+        public async Task<UserDto> GetUserByIdAsync(string ReferenceId)
+        {
+            var result = await _userService.GetUserByIdAsync(ReferenceId);
+            var response = new UserDto(result);
+            return response;
         }
 
         public async Task<string> UpdateUser(UpdateUserRequest user)
