@@ -1,6 +1,8 @@
 ﻿using Application.Interfaces;
+using Application.Repository;
 using Application.Services;
 using Infrastructure.Data;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using SolidToken.SpecFlow.DependencyInjection;
 using System;
@@ -18,44 +20,28 @@ namespace UserManagement.IntegrationTest
         public static IServiceCollection CreateService()
         {
             var services = new ServiceCollection();
-            
 
-           // services.Configure<MongoDbSettings>(services.GetSection("MongoDbSettings"));
+            // Register MongoDB settings from configuration
+            IConfiguration configuration = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json", optional: true)
+                .Build();
+
+
+            services.Configure<MongoDbSettings>(configuration.GetSection("MongoDbSettings"));
             services.AddScoped<UserDbContext>();
 
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IUserRepo, UserRepo>();
             services.AddHttpClient();
             services.AddScoped<HttpClientService>();
 
-            services.AddHttpContextAccessor();
+            //services.AddHttpContextAccessor();
 
 
             return services;
         }
 
-        //public void ConfigureServices(IServiceCollection services)
-        //{
-        //    services.AddDbContext<ReservationDevContext>(options =>
-        //        options.UseSqlServer("Server=redi-dev.database.windows.net,1433;Database=reservation-dev;User Id=red-dev-admin;Password=sWRW8bdS3CzFDOpyNwxA;TrustServerCertificate=True"));
-
-        //    services.AddScoped<ReservationDevContext>();
-
-
-        //    services.AddScoped(typeof(IRepository<,>), typeof(BaseRepository<,>));
-        //    services.AddScoped<IReservation, ReservationRepo>();
-        //    services.AddScoped<ICustomersRepository, CustomersRepository>();
-        //    services.AddScoped<ICustomersService, CustomersService>();
-        //    services.AddScoped<IPlaces, PlacesRepo>();
-        //    services.AddScoped<IReservation, ReservationRepo>();
-
-        //    services.AddScoped<IDailyNotesRepo, DailyNotesRepo>();
-        //    services.AddScoped<IDailyNotesService, DailyNotesService>();
-
-        //}
-
-        ////public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
-        ////{
-        ////    // Configure middleware pipeline if necessary
-        ////}
+        
     }
 }

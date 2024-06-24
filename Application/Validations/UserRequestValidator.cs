@@ -29,6 +29,8 @@ namespace Application.Validations
             .Must(Extensions.HasNumeric).WithMessage("Password must contain at least one numeric character.")
             .Must(Extensions.HasSpecialCharacter).WithMessage("Password must contain at least one special character.")
             .Must(Extensions.IsValidLength).WithMessage("Password must be at least 8 characters long.");
+
+            RuleFor(x => x.ConfirmPassword).Equal(x => x.Password).WithMessage("Confirm Password must match Password.");
         }
 
     }

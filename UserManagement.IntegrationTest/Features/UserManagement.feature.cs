@@ -19,89 +19,71 @@ namespace UserManagement.IntegrationTest.Features
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "3.9.0.0")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public partial class UserManagementAPIFeature : object, Xunit.IClassFixture<UserManagementAPIFeature.FixtureData>, System.IDisposable
+    [NUnit.Framework.TestFixtureAttribute()]
+    [NUnit.Framework.DescriptionAttribute("User Management API")]
+    public partial class UserManagementAPIFeature
     {
         
-        private static TechTalk.SpecFlow.ITestRunner testRunner;
+        private TechTalk.SpecFlow.ITestRunner testRunner;
         
-        private string[] _featureTags = ((string[])(null));
-        
-        private Xunit.Abstractions.ITestOutputHelper _testOutputHelper;
+        private static string[] featureTags = ((string[])(null));
         
 #line 1 "UserManagement.feature"
 #line hidden
         
-        public UserManagementAPIFeature(UserManagementAPIFeature.FixtureData fixtureData, UserManagement_IntegrationTest_XUnitAssemblyFixture assemblyFixture, Xunit.Abstractions.ITestOutputHelper testOutputHelper)
-        {
-            this._testOutputHelper = testOutputHelper;
-            this.TestInitialize();
-        }
-        
-        public static void FeatureSetup()
+        [NUnit.Framework.OneTimeSetUpAttribute()]
+        public virtual void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features", "User Management API", null, ProgrammingLanguage.CSharp, ((string[])(null)));
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features", "User Management API", null, ProgrammingLanguage.CSharp, featureTags);
             testRunner.OnFeatureStart(featureInfo);
         }
         
-        public static void FeatureTearDown()
+        [NUnit.Framework.OneTimeTearDownAttribute()]
+        public virtual void FeatureTearDown()
         {
             testRunner.OnFeatureEnd();
             testRunner = null;
         }
         
-        public virtual void TestInitialize()
+        [NUnit.Framework.SetUpAttribute()]
+        public void TestInitialize()
         {
         }
         
-        public virtual void TestTearDown()
+        [NUnit.Framework.TearDownAttribute()]
+        public void TestTearDown()
         {
             testRunner.OnScenarioEnd();
         }
         
-        public virtual void ScenarioInitialize(TechTalk.SpecFlow.ScenarioInfo scenarioInfo)
+        public void ScenarioInitialize(TechTalk.SpecFlow.ScenarioInfo scenarioInfo)
         {
             testRunner.OnScenarioInitialize(scenarioInfo);
-            testRunner.ScenarioContext.ScenarioContainer.RegisterInstanceAs<Xunit.Abstractions.ITestOutputHelper>(_testOutputHelper);
+            testRunner.ScenarioContext.ScenarioContainer.RegisterInstanceAs<NUnit.Framework.TestContext>(NUnit.Framework.TestContext.CurrentContext);
         }
         
-        public virtual void ScenarioStart()
+        public void ScenarioStart()
         {
             testRunner.OnScenarioStart();
         }
         
-        public virtual void ScenarioCleanup()
+        public void ScenarioCleanup()
         {
             testRunner.CollectScenarioErrors();
         }
         
-        void System.IDisposable.Dispose()
-        {
-            this.TestTearDown();
-        }
-        
-        [Xunit.SkippableFactAttribute(DisplayName="Create a new user")]
-        [Xunit.TraitAttribute("FeatureTitle", "User Management API")]
-        [Xunit.TraitAttribute("Description", "Create a new user")]
-        public virtual void CreateANewUser()
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Create a new user")]
+        public void CreateANewUser()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Create a new user", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Create a new user", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 3
-  this.ScenarioInitialize(scenarioInfo);
+this.ScenarioInitialize(scenarioInfo);
 #line hidden
-            bool isScenarioIgnored = default(bool);
-            bool isFeatureIgnored = default(bool);
-            if ((tagsOfScenario != null))
-            {
-                isScenarioIgnored = tagsOfScenario.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
-            }
-            if ((this._featureTags != null))
-            {
-                isFeatureIgnored = this._featureTags.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
-            }
-            if ((isScenarioIgnored || isFeatureIgnored))
+            if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
             {
                 testRunner.SkipScenario();
             }
@@ -109,44 +91,34 @@ namespace UserManagement.IntegrationTest.Features
             {
                 this.ScenarioStart();
 #line 4
-    testRunner.Given("I have a new user with Id \"1\", Username \"testuser\", Email \"test@example.com\", Pas" +
-                        "sword \"ComplexPassword123!\", and ConfirmPassword \"ComplexPassword123!\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+  testRunner.Given("I have a new user with Username \"testuser\", Email \"test@example.com\", Password \"C" +
+                        "omplexPassword123!\", and ConfirmPassword \"ComplexPassword123!\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 5
-    testRunner.When("I send a request to create the user", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+  testRunner.When("I send a request to create the user", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 6
-    testRunner.Then("the response should be created", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+  testRunner.Then("the response should be 200", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
 #line 7
-    testRunner.And("the user should be retrievable by ReferenceId \"1\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+  testRunner.And("the user should be retrievable by ReferenceId \"5236137a-74d1-4478-84a7-339123e2f6" +
+                        "b4\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             }
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="Update an existing user")]
-        [Xunit.TraitAttribute("FeatureTitle", "User Management API")]
-        [Xunit.TraitAttribute("Description", "Update an existing user")]
-        public virtual void UpdateAnExistingUser()
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Update an existing user")]
+        public void UpdateAnExistingUser()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Update an existing user", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Update an existing user", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 9
-  this.ScenarioInitialize(scenarioInfo);
+this.ScenarioInitialize(scenarioInfo);
 #line hidden
-            bool isScenarioIgnored = default(bool);
-            bool isFeatureIgnored = default(bool);
-            if ((tagsOfScenario != null))
-            {
-                isScenarioIgnored = tagsOfScenario.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
-            }
-            if ((this._featureTags != null))
-            {
-                isFeatureIgnored = this._featureTags.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
-            }
-            if ((isScenarioIgnored || isFeatureIgnored))
+            if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
             {
                 testRunner.SkipScenario();
             }
@@ -154,42 +126,33 @@ namespace UserManagement.IntegrationTest.Features
             {
                 this.ScenarioStart();
 #line 10
-    testRunner.Given("I have an existing user with ReferenceId \"1\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+  testRunner.Given("I have an existing user with ReferenceId \"5236137a-74d1-4478-84a7-339123e2f6b4\", " +
+                        "Username \"testuser\", Email \"test@example.com\", Password \"ComplexPassword123!\", a" +
+                        "nd ConfirmPassword \"ComplexPassword123!\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 11
-    testRunner.When("I send a request to update the user with ReferenceId \"1\", Username \"updateduser\"," +
-                        " Email \"updated@example.com\", Password \"UpdatedPassword123!\", and ConfirmPasswor" +
-                        "d \"UpdatedPassword123!\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+  testRunner.When("I send a request to update the user with ReferenceId \"5236137a-74d1-4478-84a7-339" +
+                        "123e2f6b4\", Username \"updateduser\" and Email \"updated@example.com\", Password \"Co" +
+                        "mplexPassword123!\", and ConfirmPassword \"ComplexPassword123!\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 12
-    testRunner.Then("the response should be no content", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+  testRunner.Then("the response should be 200", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="Deactivate a user")]
-        [Xunit.TraitAttribute("FeatureTitle", "User Management API")]
-        [Xunit.TraitAttribute("Description", "Deactivate a user")]
-        public virtual void DeactivateAUser()
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Deactivate a user")]
+        public void DeactivateAUser()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Deactivate a user", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Deactivate a user", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 14
-  this.ScenarioInitialize(scenarioInfo);
+this.ScenarioInitialize(scenarioInfo);
 #line hidden
-            bool isScenarioIgnored = default(bool);
-            bool isFeatureIgnored = default(bool);
-            if ((tagsOfScenario != null))
-            {
-                isScenarioIgnored = tagsOfScenario.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
-            }
-            if ((this._featureTags != null))
-            {
-                isFeatureIgnored = this._featureTags.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
-            }
-            if ((isScenarioIgnored || isFeatureIgnored))
+            if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
             {
                 testRunner.SkipScenario();
             }
@@ -197,40 +160,29 @@ namespace UserManagement.IntegrationTest.Features
             {
                 this.ScenarioStart();
 #line 15
-    testRunner.Given("I have an existing user with ReferenceId \"1\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+  testRunner.Given("I have an existing user with ReferenceId \"5236137a-74d1-4478-84a7-339123e2f6b4\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 16
-    testRunner.When("I send a request to deactivate the user", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+  testRunner.When("I send a request to deactivate the user", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 17
-    testRunner.Then("the response should be no content", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+  testRunner.Then("the response should be 200", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="Verify that user with the same email cannot be created")]
-        [Xunit.TraitAttribute("FeatureTitle", "User Management API")]
-        [Xunit.TraitAttribute("Description", "Verify that user with the same email cannot be created")]
-        public virtual void VerifyThatUserWithTheSameEmailCannotBeCreated()
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Verify that user with the same email cannot be created")]
+        public void VerifyThatUserWithTheSameEmailCannotBeCreated()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Verify that user with the same email cannot be created", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Verify that user with the same email cannot be created", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 19
-  this.ScenarioInitialize(scenarioInfo);
+this.ScenarioInitialize(scenarioInfo);
 #line hidden
-            bool isScenarioIgnored = default(bool);
-            bool isFeatureIgnored = default(bool);
-            if ((tagsOfScenario != null))
-            {
-                isScenarioIgnored = tagsOfScenario.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
-            }
-            if ((this._featureTags != null))
-            {
-                isFeatureIgnored = this._featureTags.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
-            }
-            if ((isScenarioIgnored || isFeatureIgnored))
+            if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
             {
                 testRunner.SkipScenario();
             }
@@ -238,7 +190,7 @@ namespace UserManagement.IntegrationTest.Features
             {
                 this.ScenarioStart();
                 TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
-                            "Name",
+                            "UserName",
                             "Email",
                             "Password",
                             "ConfirmPassword"});
@@ -248,10 +200,10 @@ namespace UserManagement.IntegrationTest.Features
                             "ComplexPassword123!",
                             "ComplexPassword123!"});
 #line 20
-    testRunner.Given("I have a user in database", ((string)(null)), table1, "Given ");
+  testRunner.Given("I have a user in database", ((string)(null)), table1, "Given ");
 #line hidden
                 TechTalk.SpecFlow.Table table2 = new TechTalk.SpecFlow.Table(new string[] {
-                            "Name",
+                            "UserName",
                             "Email",
                             "Password",
                             "ConfirmPassword"});
@@ -261,29 +213,28 @@ namespace UserManagement.IntegrationTest.Features
                             "ComplexPassword123!",
                             "ComplexPassword123!"});
 #line 23
-    testRunner.And("I have a user data", ((string)(null)), table2, "And ");
+  testRunner.And("I have a user data", ((string)(null)), table2, "And ");
 #line hidden
 #line 26
-    testRunner.When("I call Create user API", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+  testRunner.When("I call Create user API", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 27
-    testRunner.Then("I will receive an error code 400", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+  testRunner.Then("I will receive an error code 400", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
 #line 28
-    testRunner.And("Response message should contain \"The user with the same email already exists.\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+  testRunner.And("Response message should contain \"The user with the same email already exists.\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             }
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableTheoryAttribute(DisplayName="Verify that validation error is returned when required fields are not provided")]
-        [Xunit.TraitAttribute("FeatureTitle", "User Management API")]
-        [Xunit.TraitAttribute("Description", "Verify that validation error is returned when required fields are not provided")]
-        [Xunit.InlineDataAttribute("1", "", "email1@email.de", "ComplexPassword123!", "ComplexPassword123!", "Name field is required", new string[0])]
-        [Xunit.InlineDataAttribute("2", "user1", "", "ComplexPassword123!", "ComplexPassword123!", "Email field is required", new string[0])]
-        [Xunit.InlineDataAttribute("3", "user1", "email1@email.de", "", "ComplexPassword123!", "Password field is required", new string[0])]
-        [Xunit.InlineDataAttribute("4", "user1", "email1@email.de", "ComplexPassword123!", "", "Confirm Password is required", new string[0])]
-        public virtual void VerifyThatValidationErrorIsReturnedWhenRequiredFieldsAreNotProvided(string row, string name, string email, string password, string confirmPassword, string error, string[] exampleTags)
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Verify that validation error is returned when required fields are not provided")]
+        [NUnit.Framework.TestCaseAttribute("1", "", "email1@email.de", "ComplexPassword123!", "ComplexPassword123!", "Name field is required", null)]
+        [NUnit.Framework.TestCaseAttribute("2", "user1", "", "ComplexPassword123!", "ComplexPassword123!", "Email field is required", null)]
+        [NUnit.Framework.TestCaseAttribute("3", "user1", "email1@email.de", "", "ComplexPassword123!", "Password field is required", null)]
+        [NUnit.Framework.TestCaseAttribute("4", "user1", "email1@email.de", "ComplexPassword123!", "", "Confirm Password is required", null)]
+        public void VerifyThatValidationErrorIsReturnedWhenRequiredFieldsAreNotProvided(string row, string name, string email, string password, string confirmPassword, string error, string[] exampleTags)
         {
             string[] tagsOfScenario = exampleTags;
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
@@ -293,21 +244,11 @@ namespace UserManagement.IntegrationTest.Features
             argumentsOfScenario.Add("Password", password);
             argumentsOfScenario.Add("ConfirmPassword", confirmPassword);
             argumentsOfScenario.Add("Error", error);
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Verify that validation error is returned when required fields are not provided", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Verify that validation error is returned when required fields are not provided", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 30
-  this.ScenarioInitialize(scenarioInfo);
+this.ScenarioInitialize(scenarioInfo);
 #line hidden
-            bool isScenarioIgnored = default(bool);
-            bool isFeatureIgnored = default(bool);
-            if ((tagsOfScenario != null))
-            {
-                isScenarioIgnored = tagsOfScenario.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
-            }
-            if ((this._featureTags != null))
-            {
-                isFeatureIgnored = this._featureTags.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
-            }
-            if ((isScenarioIgnored || isFeatureIgnored))
+            if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
             {
                 testRunner.SkipScenario();
             }
@@ -315,7 +256,7 @@ namespace UserManagement.IntegrationTest.Features
             {
                 this.ScenarioStart();
                 TechTalk.SpecFlow.Table table3 = new TechTalk.SpecFlow.Table(new string[] {
-                            "Name",
+                            "UserName",
                             "Email",
                             "Password",
                             "ConfirmPassword"});
@@ -325,40 +266,38 @@ namespace UserManagement.IntegrationTest.Features
                             string.Format("{0}", password),
                             string.Format("{0}", confirmPassword)});
 #line 31
-    testRunner.Given("I have a user in database", ((string)(null)), table3, "Given ");
+  testRunner.Given("I have a user in database", ((string)(null)), table3, "Given ");
 #line hidden
 #line 34
-    testRunner.When("I call Create user API", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+  testRunner.When("I call Create user API", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 35
-    testRunner.Then("I should receive an error code 400", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+  testRunner.Then("I should receive an error code 400", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
 #line 36
-    testRunner.And(string.Format("Response message should contain \"{0}\"", error), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+  testRunner.And(string.Format("Response message should contain \"{0}\"", error), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             }
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableTheoryAttribute(DisplayName="Verify that validation error is returned when password does not meet complexity r" +
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Verify that validation error is returned when password does not meet complexity r" +
             "equirements or password size")]
-        [Xunit.TraitAttribute("FeatureTitle", "User Management API")]
-        [Xunit.TraitAttribute("Description", "Verify that validation error is returned when password does not meet complexity r" +
-            "equirements or password size")]
-        [Xunit.InlineDataAttribute("1", "abc", "abc", "Password length should be between 8 and 16.", new string[0])]
-        [Xunit.InlineDataAttribute("2", "123", "123", "Password length should be between 8 and 16.", new string[0])]
-        [Xunit.InlineDataAttribute("3", "abc123", "abc123", "Password length should be between 8 and 16.", new string[0])]
-        [Xunit.InlineDataAttribute("4", "123456781235678abc", "123456781235678abc", "Password length should be between 8 and 16.", new string[0])]
-        [Xunit.InlineDataAttribute("5", "1111111", "1111111", "Password does not meet complexity level, it should contain 1 upper case letter, 1" +
-            " number and 1 special character.", new string[0])]
-        [Xunit.InlineDataAttribute("6", "1111111aA", "1111111aA", "Password does not meet complexity level, it should contain 1 upper case letter, 1" +
-            " number and 1 special character.", new string[0])]
-        [Xunit.InlineDataAttribute("7", "1111111a!", "1111111a!", "Password does not meet complexity level, it should contain 1 upper case letter, 1" +
-            " number and 1 special character.", new string[0])]
-        [Xunit.InlineDataAttribute("8", "aaaaaaa!A", "aaaaaaa!A", "Password does not meet complexity level, it should contain 1 upper case letter, 1" +
-            " number and 1 special character.", new string[0])]
-        [Xunit.InlineDataAttribute("9", "ComplexPassword123!", "ComplexPasswrd!", "Password and Confirm Password do not match.", new string[0])]
-        public virtual void VerifyThatValidationErrorIsReturnedWhenPasswordDoesNotMeetComplexityRequirementsOrPasswordSize(string row, string password, string confirmPassword, string error, string[] exampleTags)
+        [NUnit.Framework.TestCaseAttribute("1", "abc", "abc", "Password length should be between 8 and 16.", null)]
+        [NUnit.Framework.TestCaseAttribute("2", "123", "123", "Password length should be between 8 and 16.", null)]
+        [NUnit.Framework.TestCaseAttribute("3", "abc123", "abc123", "Password length should be between 8 and 16.", null)]
+        [NUnit.Framework.TestCaseAttribute("4", "123456781235678abc", "123456781235678abc", "Password length should be between 8 and 16.", null)]
+        [NUnit.Framework.TestCaseAttribute("5", "1111111", "1111111", "Password does not meet complexity level, it should contain 1 upper case letter, 1" +
+            " number and 1 special character.", null)]
+        [NUnit.Framework.TestCaseAttribute("6", "1111111aA", "1111111aA", "Password does not meet complexity level, it should contain 1 upper case letter, 1" +
+            " number and 1 special character.", null)]
+        [NUnit.Framework.TestCaseAttribute("7", "1111111a!", "1111111a!", "Password does not meet complexity level, it should contain 1 upper case letter, 1" +
+            " number and 1 special character.", null)]
+        [NUnit.Framework.TestCaseAttribute("8", "aaaaaaa!A", "aaaaaaa!A", "Password does not meet complexity level, it should contain 1 upper case letter, 1" +
+            " number and 1 special character.", null)]
+        [NUnit.Framework.TestCaseAttribute("9", "ComplexPassword123!", "ComplexPasswrd!", "Password and Confirm Password do not match.", null)]
+        public void VerifyThatValidationErrorIsReturnedWhenPasswordDoesNotMeetComplexityRequirementsOrPasswordSize(string row, string password, string confirmPassword, string error, string[] exampleTags)
         {
             string[] tagsOfScenario = exampleTags;
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
@@ -367,21 +306,11 @@ namespace UserManagement.IntegrationTest.Features
             argumentsOfScenario.Add("ConfirmPassword", confirmPassword);
             argumentsOfScenario.Add("Error", error);
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Verify that validation error is returned when password does not meet complexity r" +
-                    "equirements or password size", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
+                    "equirements or password size", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 44
-  this.ScenarioInitialize(scenarioInfo);
+this.ScenarioInitialize(scenarioInfo);
 #line hidden
-            bool isScenarioIgnored = default(bool);
-            bool isFeatureIgnored = default(bool);
-            if ((tagsOfScenario != null))
-            {
-                isScenarioIgnored = tagsOfScenario.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
-            }
-            if ((this._featureTags != null))
-            {
-                isFeatureIgnored = this._featureTags.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
-            }
-            if ((isScenarioIgnored || isFeatureIgnored))
+            if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
             {
                 testRunner.SkipScenario();
             }
@@ -389,7 +318,7 @@ namespace UserManagement.IntegrationTest.Features
             {
                 this.ScenarioStart();
                 TechTalk.SpecFlow.Table table4 = new TechTalk.SpecFlow.Table(new string[] {
-                            "Name",
+                            "UserName",
                             "Email",
                             "Password",
                             "ConfirmPassword"});
@@ -399,35 +328,19 @@ namespace UserManagement.IntegrationTest.Features
                             string.Format("{0}", password),
                             string.Format("{0}", confirmPassword)});
 #line 45
-    testRunner.Given("I have a user in database", ((string)(null)), table4, "Given ");
+  testRunner.Given("I have a user in database", ((string)(null)), table4, "Given ");
 #line hidden
 #line 48
-    testRunner.When("I call Create user API", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+  testRunner.When("I call Create user API", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 49
-    testRunner.Then("I should receive an error code 400", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+  testRunner.Then("I should receive an error code 400", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
 #line 50
-    testRunner.And(string.Format("Response message should contain \"{0}\"", error), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+  testRunner.And(string.Format("Response message should contain \"{0}\"", error), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             }
             this.ScenarioCleanup();
-        }
-        
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "3.9.0.0")]
-        [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-        public class FixtureData : System.IDisposable
-        {
-            
-            public FixtureData()
-            {
-                UserManagementAPIFeature.FeatureSetup();
-            }
-            
-            void System.IDisposable.Dispose()
-            {
-                UserManagementAPIFeature.FeatureTearDown();
-            }
         }
     }
 }

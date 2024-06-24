@@ -22,23 +22,33 @@ namespace Application.Services
 
         public async Task<string> CreateUser(UserRequest user)
         {
-            User sa = new User();
-            sa.Id = Guid.NewGuid().ToString();
-            sa.Username = user.Username;
-            sa.Email = user.Email;
-            sa.Password = user.Password;
-            sa.ReferenceId = Guid.NewGuid().ToString();
-            sa.IsActive = true;
-            sa.CreatedDate = DateTime.Now;
-            var result = await _userService.CreateUser(sa);
-            if (result != null)
+            var res = await _userService.GetAllUsersAsync();
+            var chk = res.FirstOrDefault(c => c.Email == user.Email);
+            if (chk != null)
             {
-                return "User created successful";
+                return "User already exist";
             }
             else
             {
-                return "unable to create user !!!";
+                User sa = new User();
+                sa.Id = Guid.NewGuid().ToString();
+                sa.Username = user.Username;
+                sa.Email = user.Email;
+                sa.Password = user.Password;
+                sa.ReferenceId = Guid.NewGuid().ToString();
+                sa.IsActive = true;
+                sa.CreatedDate = DateTime.Now;
+                var result = await _userService.CreateUser(sa);
+                if (result != null)
+                {
+                    return "User created successful";
+                }
+                else
+                {
+                    return "unable to create user !!!";
+                }
             }
+            
         }
 
         public async Task<string> DeactivateUser(string ReferenceId)

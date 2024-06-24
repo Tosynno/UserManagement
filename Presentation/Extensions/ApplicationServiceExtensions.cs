@@ -4,6 +4,7 @@ using Application.Repository;
 using Application.Services;
 using Application.Validations;
 using FluentValidation;
+using FluentValidation.AspNetCore;
 using Infrastructure.Data;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using System.Text.Encodings.Web;
@@ -18,7 +19,7 @@ namespace Presentation.Extensions
             services.AddSingleton<HtmlEncoder>(
                 HtmlEncoder.Create(allowedRanges: new[] { UnicodeRanges.BasicLatin,
                                                UnicodeRanges.CjkUnifiedIdeographs }));
-
+            services.AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<Program>());
             services.Configure<MongoDbSettings>(config.GetSection("MongoDbSettings"));
             services.AddScoped<UserDbContext>();
             services.AddScoped<IUserRepo, UserRepo>();
