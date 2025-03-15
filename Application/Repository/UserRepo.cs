@@ -51,7 +51,6 @@ namespace Application.Repository
                 .Set("Username", user.Username)
                 .Set("Email", user.Email)
                 .Set("IsActive", user.IsActive)
-               // .Set("ReferenceId", user.ReferenceId)
                 .Set("Password", user.Password)
                 .Set("CreatedDate", user.CreatedDate);
 
